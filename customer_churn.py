@@ -46,17 +46,52 @@ df["SeniorCitizen"] = df["SeniorCitizen"].apply(conv)
 # plt.title("Churn By SeniorCitizen")
 # plt.show()
 
-plt.figure(figsize=(4,4))
-sns.histplot(x='tenure', data=df, bins=30, hue='Churn')
-plt.show()
+# plt.figure(figsize=(4,4))
+# sns.histplot(x='tenure', data=df, bins=30, hue='Churn')
+# plt.show()
 
 #people who have used our services for long time have stayed and people who have used for 1 or 2 months have churned
 
 
-plt.figure(figsize=(4,4))
-ax =sns.countplot(x = "Contract" , data=df, hue="Churn")
-ax.bar_label(ax.containers[0])
-plt.title("Churn By Contract")
-plt.show()
+# plt.figure(figsize=(4,4))
+# ax =sns.countplot(x = "Contract" , data=df, hue="Churn")
+# ax.bar_label(ax.containers[0])
+# plt.title("Churn By Contract")
+# plt.show()
 
 #people who have month to month contract are likley to churn then those who have 1 or 2 years of contract
+
+#print(df.columns.values)
+
+cols = [
+    'PhoneService', 'MultipleLines', 'InternetService',
+    'OnlineSecurity', 'OnlineBackup', 'DeviceProtection',
+    'TechSupport', 'StreamingTV', 'StreamingMovies'
+]
+
+fig, axes = plt.subplots(3, 3, figsize=(12, 9))
+
+for col, ax in zip(cols, axes.flatten()):
+    sns.countplot(data=df, x=col, ax=ax, hue='Churn')
+    ax.set_title(f'Count of {col}')
+    ax.set_xlabel(col)
+    ax.set_ylabel('Count')
+    ax.tick_params(axis='x')
+
+plt.tight_layout()
+plt.show()
+
+#The countplots show the distribution of customers across different telecom services, including phone service, internet service, online security, and streaming services. They help identify which services are most and least commonly used by customers. These visualizations also make it easier to compare customer preferences and understand service usage patterns.
+
+
+plt.figure(figsize=(6,4))
+ax =sns.countplot(x = "PaymentMethod" , data=df, hue="Churn")
+ax.bar_label(ax.containers[0])
+ax.bar_label(ax.containers[1])
+
+plt.title("Churned Customers By Payment Method")
+plt.xticks(rotation=45)
+plt.show()
+
+# customers who have electronic check as their payment method are more likely to churn.
+
